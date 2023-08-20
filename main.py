@@ -3,6 +3,7 @@ from fastapi import FastAPI, __version__
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
+from googletrans import Translator
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -35,12 +36,12 @@ async def root():
 async def hello():
     return {'res': 'pong', 'version': __version__, "time": time()}
 
+translator = Translator()
 class Item(BaseModel):
     word: str
  
 @app.post("/lan/")
 async def create_item(item: Item):
-    return item
-    # text1 = item.word
-    # translated_text = translator.translate(text1, dest='en')
-    # return translated_text.text
+    text1 = item.word
+    translated_text = translator.translate(text1, dest='en')
+    return translated_text.text
