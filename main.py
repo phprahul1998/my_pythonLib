@@ -40,11 +40,7 @@ translator = Translator()
 class Item(BaseModel):
     word: str
  
-
-app = FastAPI()
-
-
-@app.get("/lan/")
+@app.post("/lan/")
 async def create_item(item: Item):
     text1 = item.word
     translated_text = translator.translate(text1, dest='en')
