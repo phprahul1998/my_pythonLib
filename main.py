@@ -44,7 +44,7 @@ class Item(BaseModel):
 app = FastAPI()
 
 
-@app.post("/lan/")
+@app.get("/lan/")
 async def create_item(item: Item):
     text1 = item.word
     translated_text = translator.translate(text1, dest='en')
