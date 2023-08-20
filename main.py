@@ -3,7 +3,7 @@ from fastapi import FastAPI, __version__
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
-from googletrans import Translator
+from deep_translator import GoogleTranslator
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
@@ -43,5 +43,5 @@ class Item(BaseModel):
 @app.post("/lan/")
 async def create_item(item: Item):
     text1 = item.word
-    translated_text = translator.translate(text1, dest='en')
-    return translated_text.text
+    translated = GoogleTranslator(source='auto', target='en').translate(text1)
+    return translated
